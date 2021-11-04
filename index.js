@@ -3,6 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const port = 3001;
+const userRouter = require('./routes/users');
 
 const app = express();
 
@@ -28,17 +29,7 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
-
-app.post('/test', (req, res) => {
-	const data = req.body;
-	console.log(data.username, data.password);
-	if (req.cookies) {
-		console.log('cookie detected');
-	}
-	console.log('cookie: ' + JSON.stringify(req.cookies));
-	res.cookie('test', 'test cookie');
-	res.json({ cookie: 'check check' });
-});
+app.use('/user', userRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello world');
