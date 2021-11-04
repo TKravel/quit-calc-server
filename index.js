@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 5000;
 
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
+	res.cookie('test', 'test cookie');
 	res.send('Hello World!');
 });
 
