@@ -5,7 +5,28 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 
-router.post('/test', (req, res) => {
+const verifyToken = (req, res, next) => {
+	const { auth } = req.cookies;
+	if (auth) {
+		jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
+			if (err) {
+				console.log(err);
+			} else if (decoded === false) {
+				res.json({ msg: 'denied' });
+			}
+		});
+		next();
+	} else {
+		res.json({ msg: 'denied' }).send();
+	}
+	next();
+};
+
+router.get('/verify_user', verifyToken, (req, res) => {
+	res.json({ msg: 'granted' });
+});
+
+router.post('/login', (req, res) => {
 	const data = req.body;
 	console.log(data.username, data.password);
 	if (req.cookies) {
@@ -14,6 +35,10 @@ router.post('/test', (req, res) => {
 	console.log('cookie: ' + JSON.stringify(req.cookies));
 	res.cookie('test', 'test cookie');
 	res.json({ cookie: 'check check' });
+});
+
+router.get('/logout', (req, res) => {
+	res.clearCookie('auth').json({ msg: 'logged out' });
 });
 
 router.post('/register', (req, res) => {
