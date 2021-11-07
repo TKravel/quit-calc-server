@@ -27,14 +27,37 @@ router.get('/verify_user', verifyToken, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-	const data = req.body;
-	console.log(data.username, data.password);
-	if (req.cookies) {
-		console.log('cookie detected');
-	}
-	console.log('cookie: ' + JSON.stringify(req.cookies));
-	res.cookie('test', 'test cookie');
-	res.json({ cookie: 'check check' });
+	const { username, password } = req.body;
+
+	User.findOne({ user: username }, (err, foundUser) => {
+		if (err) {
+			console.log('Mongo err: ' + err);
+			res.status(500).json({ error: 'Database error' });
+		} else if (!foundUser) {
+			res.status(403).json({ error: 'Username or password incorrect' });
+		} else {
+			const pwHash = foundUser.password;
+
+			bcrypt.compare(password, pwHash, (err, result) => {
+				if (err) {
+					res.status(500).json({ error: 'Internal server error' });
+				} else if (!result) {
+					res.status(403).json({
+						error: 'Username or password incorrect',
+					});
+				} else if (result) {
+					const userID = foundUser._id;
+
+					const token = jwt.sign(
+						{ id: userID },
+						process.env.JWT_SECRET
+					);
+
+					res.cookie('auth', token).json({ msg: 'granted' });
+				}
+			});
+		}
+	});
 });
 
 router.get('/logout', (req, res) => {
@@ -61,16 +84,28 @@ router.post('/register', (req, res) => {
 							email: email,
 							password: hash,
 						});
-						newUser.save();
-						const token = jwt.sign(
-							{ user: username },
-							process.env.JWT_SECRET
-						);
-						res.cookie('auth', token).json({ msg: 'success' });
+						newUser.save((err, createdUser) => {
+							if (err) {
+								res.status(500).json({
+									error: 'Error saving user',
+								});
+							} else {
+								const userID = createdUser._id;
+
+								const token = jwt.sign(
+									{ id: userID },
+									process.env.JWT_SECRET
+								);
+								res.cookie('auth', token).json({
+									msg: 'granted',
+								});
+							}
+						});
 					}
 				});
 			} catch (err) {
 				console.log(err);
+				res.status(500).json({ error: 'Internal server error' });
 			}
 		}
 	});
