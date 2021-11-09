@@ -12,18 +12,18 @@ const verifyToken = (req, res, next) => {
 			if (err) {
 				console.log(err);
 			} else if (decoded === false) {
-				res.json({ msg: 'denied' });
+				res.status(401).json({ msg: 'denied' });
 			}
 		});
 		next();
 	} else {
-		res.json({ msg: 'denied' }).send();
+		return res.status(401).json({ msg: 'denied' });
 	}
 	next();
 };
 
 router.get('/verify_user', verifyToken, (req, res) => {
-	res.json({ msg: 'granted' });
+	res.status(200).json({ msg: 'granted' });
 });
 
 router.post('/login', (req, res) => {
@@ -34,7 +34,7 @@ router.post('/login', (req, res) => {
 			console.log('Mongo err: ' + err);
 			res.status(500).json({ error: 'Database error' });
 		} else if (!foundUser) {
-			res.status(403).json({ error: 'Username or password incorrect' });
+			res.status(401).json({ error: 'Username or password incorrect' });
 		} else {
 			const pwHash = foundUser.password;
 
@@ -42,7 +42,7 @@ router.post('/login', (req, res) => {
 				if (err) {
 					res.status(500).json({ error: 'Internal server error' });
 				} else if (!result) {
-					res.status(403).json({
+					res.status(401).json({
 						error: 'Username or password incorrect',
 					});
 				} else if (result) {
@@ -72,7 +72,7 @@ router.post('/register', (req, res) => {
 		if (err) {
 			console.log('err: ' + err);
 		} else if (result) {
-			res.json({ error: 'Username taken' });
+			res.status(401).json({ error: 'Username taken' });
 		} else {
 			try {
 				bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -96,7 +96,7 @@ router.post('/register', (req, res) => {
 									{ id: userID },
 									process.env.JWT_SECRET
 								);
-								res.cookie('auth', token).json({
+								res.cookie('auth', token).status(200).json({
 									msg: 'granted',
 								});
 							}
