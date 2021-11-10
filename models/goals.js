@@ -1,6 +1,11 @@
-import { Schema as _Schema, model } from 'mongoose';
-const Schema = _Schema;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const GoalSchema = new Schema({});
+const GoalSchema = new Schema({
+	user: { type: String },
+	goals: { type: Array },
+});
 
-export default model('Goal', GoalSchema);
+const Goal = mongoose.model('Goal', GoalSchema);
+
+module.exports = Goal;

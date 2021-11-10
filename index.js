@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const port = 3001;
 const userRouter = require('./routes/users');
+const goalRouter = require('./routes/goals');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use('/user', userRouter);
+app.use('/goals', goalRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello world');
