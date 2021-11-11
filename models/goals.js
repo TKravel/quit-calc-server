@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const GoalSchema = new Schema({
+const goalSchema = new Schema({
 	user: { type: String },
 	goals: { type: Array },
 });
 
-const Goal = mongoose.model('Goal', GoalSchema);
+const Goal = mongoose.model('Goal', goalSchema);
 
 module.exports = Goal;
