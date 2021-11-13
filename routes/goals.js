@@ -25,26 +25,21 @@ router.post('/create_goal', verifyUser, (req, res, next) => {
 	const { goal, goalCost } = req.body;
 	const userID = req.id;
 
-	const query = {user: userID},
-    update = { $push: {"goals": {goal: goal, goalCost: goalCost}} },
-    options = { upsert: true, new: true, safe: true };
+	const query = { user: userID },
+		update = { $push: { goals: { goal: goal, goalCost: goalCost } } },
+		options = { upsert: true, new: true, safe: true };
 
 	Goal.findOneAndUpdate(query, update, options, (err, result) => {
-		if(err){
-			console.log(err)
-			res.status(500).json({error: 'Internal server error'})
+		if (err) {
+			console.log(err);
+			res.status(500).json({ error: 'Internal server error' });
 		}
-		if(result){
+		if (result) {
 			const goalCount = result.goals.length;
 
-			delete result.user;
-
-			res.status(200).json({count: goalCount, doc: result})
+			res.status(200).json({ count: goalCount, doc: result });
 		}
-	}).select("-user -_id -__v")
-
-
-
+	}).select('-user -_id -__v');
 });
 
 router.get('/get_goals', verifyUser, (req, res, next) => {
@@ -61,10 +56,12 @@ router.get('/get_goals', verifyUser, (req, res, next) => {
 			console.log('No user goals found');
 			res.status(200).json({ msg: 'none' });
 		} else if (result) {
+			const goalCount = result[0].goals.length;
 			console.log('results found');
-			res.json({  docs: result });
+			console.log(result);
+			res.json({ docs: result, count: goalCount });
 		}
-	});
+	}).select('-user -_id -__v');
 });
 
 module.exports = router;
