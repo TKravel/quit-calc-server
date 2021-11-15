@@ -5,6 +5,7 @@ const cors = require('cors');
 const port = 3001;
 const userRouter = require('./routes/users');
 const goalRouter = require('./routes/goals');
+const formRouter = require('./routes/form');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use('/user', userRouter);
 app.use('/goals', goalRouter);
+app.use('/form', formRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello world');
