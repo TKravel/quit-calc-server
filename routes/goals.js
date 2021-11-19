@@ -64,4 +64,32 @@ router.get('/get_goals', verifyUser, (req, res, next) => {
 	}).select('-user -_id -__v');
 });
 
+router.post('/delete_goal', verifyUser, (req, res, next) => {
+	const userID = req.id;
+	const item = req.body.item;
+
+	console.log(userID, req.body);
+
+	Goal.findOneAndUpdate(
+		{ user: userID },
+		{ $pull: { goals: { goal: item } } },
+		{ new: true },
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				res.status(500).json({ error: 'Internal server error' });
+			}
+			if (result) {
+				const count = result.goals.length;
+				console.log('item removed from goal array');
+				res.status(200).json({
+					msg: 'success',
+					goalArr: result,
+					count: count,
+				});
+			}
+		}
+	).select('-user -_id -__v');
+});
+
 module.exports = router;
