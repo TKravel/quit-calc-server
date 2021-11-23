@@ -92,4 +92,44 @@ router.post('/delete_goal', verifyUser, (req, res, next) => {
 	).select('-user -_id -__v');
 });
 
+router.post('/completed_goal', verifyUser, (req, res, next) => {
+	const userID = req.id;
+
+	const goal = req.body.goal;
+	const cost = req.body.cost;
+	console.log(goal, cost);
+
+	Goal.findOneAndUpdate(
+		{ user: userID },
+		{
+			$pull: { goals: { goal: goal } },
+			$push: {
+				completedGoals: {
+					goal: goal,
+					goalCost: cost,
+				},
+			},
+		},
+		{ new: true },
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				res.status(500).json({ error: 'Internal server error' });
+			}
+			if (result) {
+				const count = result.goals.length;
+
+				// const completedGoal = result.goals.slice(index, index + 1);
+
+				console.log('item removed from goal array');
+				res.status(200).json({
+					msg: 'success',
+					doc: result,
+					count: count,
+				});
+			}
+		}
+	).select('-user -_id -__v');
+});
+
 module.exports = router;
