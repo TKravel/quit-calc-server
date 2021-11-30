@@ -25,23 +25,28 @@ router.post('/save_input', verifyUser, (req, res) => {
 	const userID = req.id;
 	const { packs, price, quitDate } = req.body;
 
-	const userData = new Form({
+	const update = {
 		user: userID,
 		packs: packs,
 		price: price,
 		quitDate: quitDate,
-	});
+	};
 
-	userData.save((err, data) => {
-		if (err) {
-			console.log('error saving form');
-			res.status(500).json({ error: 'Internal server error' });
+	Form.findOneAndUpdate(
+		{ user: userID },
+		update,
+		{ upsert: true },
+		(err, result) => {
+			if (err) {
+				console.log(err);
+				res.status(500).json({ error: 'Interal server error' });
+			}
+			if (result) {
+				console.log('Form saved');
+				res.status(200).json({ msg: 'Success' });
+			}
 		}
-		if (data) {
-			console.log('form saved');
-			res.status(200).json({ msg: 'Success' });
-		}
-	});
+	);
 });
 
 router.get('/get_form', verifyUser, (req, res) => {
