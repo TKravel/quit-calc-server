@@ -56,7 +56,10 @@ router.get('/createDemoUser', async (req, res) => {
 				});
 				const token = jwt.sign({ id: userId }, process.env.JWT_SECRET);
 
-				res.cookie('auth', token).json({ msg: 'Success' });
+				res.cookie('auth', token, {
+					sameSite: 'none',
+					secure: true,
+				}).json({ msg: 'Success' });
 			} catch (err) {
 				if (err) {
 					console.log('catch' + err);
