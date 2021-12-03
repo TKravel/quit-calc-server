@@ -28,6 +28,8 @@ router.options(
 	cors({ origin: 'https://condescending-boyd-227f42.netlify.app' })
 );
 router.get('/verify_user', verifyToken, (req, res) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Credentials', true);
 	res.status(200).json({ msg: 'granted' });
 });
 
