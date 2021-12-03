@@ -28,7 +28,8 @@ const corsOptions = {
 	'Access-Control-Allow-Credentials': true,
 	credentials: true,
 	methods: ['POST', 'GET'],
-	allowedHeaders: 'Content-Type',
+	allowedHeaders: ['Content-Type', 'Authorization'],
+	optionsSuccessStatus: 200,
 };
 
 app.use(express.json());
