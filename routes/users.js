@@ -4,6 +4,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const verifyToken = (req, res, next) => {
 	const { auth } = req.cookies;
@@ -22,6 +23,7 @@ const verifyToken = (req, res, next) => {
 	next();
 };
 
+router.options('/verify_user', cors());
 router.get('/verify_user', verifyToken, (req, res) => {
 	res.status(200).json({ msg: 'granted' });
 });
