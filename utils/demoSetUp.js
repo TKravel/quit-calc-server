@@ -1,7 +1,7 @@
 const form = {
-	packs: '10',
+	packs: '1',
 	price: '7.95',
-	quitDate: '2021-11-04T01:36:00.000+00:00',
+	quitDate: '2021-10-13T01:36:00.000+00:00',
 };
 
 const goals = [
