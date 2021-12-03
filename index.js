@@ -24,7 +24,7 @@ db.once('open', function () {
 });
 
 const corsOptions = {
-	origin: 'https://condescending-boyd-227f42.netlify.app',
+	origin: true,
 	'Access-Control-Allow-Credentials': true,
 	credentials: true,
 	methods: ['POST', 'GET'],
