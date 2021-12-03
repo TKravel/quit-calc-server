@@ -23,7 +23,10 @@ const verifyToken = (req, res, next) => {
 	next();
 };
 
-router.options('/verify_user', cors());
+router.options(
+	'/verify_user',
+	cors({ origin: 'https://condescending-boyd-227f42.netlify.app' })
+);
 router.get('/verify_user', verifyToken, (req, res) => {
 	res.status(200).json({ msg: 'granted' });
 });
