@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const port = 3001;
+const port = process.env.PORT || 3001;
 const userRouter = require('./routes/users');
 const goalRouter = require('./routes/goals');
 const formRouter = require('./routes/form');
@@ -24,7 +24,7 @@ db.once('open', function () {
 });
 
 const corsOptions = {
-	origin: true,
+	origin: ['https://condescending-boyd-227f42.netlify.app'],
 	'Access-Control-Allow-Credentials': true,
 	credentials: true,
 };
