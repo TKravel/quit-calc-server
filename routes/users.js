@@ -58,7 +58,10 @@ router.post('/login', (req, res) => {
 						process.env.JWT_SECRET
 					);
 
-					res.cookie('auth', token,{SameSite=none}).json({ msg: 'granted' });
+					res.cookie('auth', token, {
+						sameSite: 'none',
+						secure: true,
+					}).json({ msg: 'granted' });
 				}
 			});
 		}
