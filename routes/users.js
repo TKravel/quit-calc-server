@@ -70,7 +70,9 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
 	// res.cookie('auth', '').json({ msg: 'logged out' });
-	res.clearCookie('auth'{sameSite: 'none', secure: true}).json({ msg: 'logged out' });
+	res.clearCookie('auth', { sameSite: 'none', secure: true }).json({
+		msg: 'logged out',
+	});
 });
 
 router.post('/register', (req, res) => {
