@@ -24,9 +24,11 @@ db.once('open', function () {
 });
 
 const corsOptions = {
-	origin: ['https://condescending-boyd-227f42.netlify.app'],
+	origin: 'https://condescending-boyd-227f42.netlify.app',
 	'Access-Control-Allow-Credentials': true,
 	credentials: true,
+	methods: ['POST', 'GET'],
+	allowedHeaders: 'Content-Type',
 };
 
 app.use(express.json());
