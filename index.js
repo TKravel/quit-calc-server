@@ -6,6 +6,7 @@ const port = 3001;
 const userRouter = require('./routes/users');
 const goalRouter = require('./routes/goals');
 const formRouter = require('./routes/form');
+const demoRouter = require('./routes/demo');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cookieParser());
 app.use('/user', userRouter);
 app.use('/goals', goalRouter);
 app.use('/form', formRouter);
+app.use('/demo', demoRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello world');

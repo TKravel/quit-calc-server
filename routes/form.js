@@ -39,11 +39,15 @@ router.post('/save_input', verifyUser, (req, res) => {
 		(err, result) => {
 			if (err) {
 				console.log(err);
-				res.status(500).json({ error: 'Interal server error' });
+				res.status(500).json({
+					error: 'Interal server error. Please try again',
+				});
 			}
 			if (result) {
 				console.log('Form saved');
-				res.status(200).json({ msg: 'Success' });
+				res.status(200).json({
+					msg: 'Success',
+				});
 			}
 		}
 	);
@@ -55,14 +59,16 @@ router.get('/get_form', verifyUser, (req, res) => {
 	Form.findOne({ user: userID }, (err, formData) => {
 		if (err) {
 			console.log('Error finding form data');
-			res.status(500).json({ error: 'Error getting data' });
+			res.status(500).json({ error: 'Error getting data.' });
 		}
 		if (!formData) {
 			console.log('No form data found');
 			res.status(200).json({ msg: 'No data found' });
 		} else if (formData) {
 			console.log('Form data found');
-			res.status(200).json({ formData: formData });
+			res.status(200).json({
+				formData: formData,
+			});
 		}
 	});
 });
