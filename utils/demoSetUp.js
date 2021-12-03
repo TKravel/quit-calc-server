@@ -6,23 +6,23 @@ const form = {
 
 const goals = [
 	{
-		goal: 'car',
-		goalCost: '300',
+		goal: 'Car',
+		goalCost: '300.00',
 	},
 	{
 		goal: 'Boat',
-		goalCost: '1000',
+		goalCost: '1000.00',
 	},
 ];
 
 const completedGoals = [
 	{
 		goal: 'New shoes',
-		goalCost: '100',
+		goalCost: '100.00',
 	},
 	{
 		goal: 'Bike',
-		goalCost: '300',
+		goalCost: '300.00',
 	},
 ];
 
