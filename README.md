@@ -2,11 +2,13 @@
 
 Quit smoking calculator is a fullstack MERN application used to set goals to help you quit smoking by visualizing savings.
 
-## Server code
+## Client code
 
 Server code can be found at https://github.com/TKravel/quit-calc-client
 
 ## Installation
+
+### Client installation
 
 From the root level of the working directory run
 
@@ -17,6 +19,9 @@ To start the client run
 ```bash
 npm start
 ```
+
+### Server installation
+
 In a second terminal opened to the server code run the following to start the server
 ```bash
 node index.js
