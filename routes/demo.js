@@ -30,7 +30,6 @@ router.get('/createDemoUser', async (req, res) => {
 	const createNewUser = async () => {
 		const result = await User.exists({ user: testName });
 		if (result) {
-			console.log('test true');
 			testName = createUser();
 			createNewUser();
 		} else {
@@ -70,28 +69,6 @@ router.get('/createDemoUser', async (req, res) => {
 	};
 
 	createNewUser();
-
-	// if (usernameAvail(testName)) {
-	// 	const pw = 'demoPassword' + Math.floor(Math.random() * 1000000);
-	// 	const email = 'demoEmail@email.com';
-
-	// 	try {
-	// 		const user = await User.create({
-	// 			user: testName,
-	// 			email: email,
-	// 			password: pw,
-	// 		});
-	// 		const userId = user._id;
-	// 		console.log(userId);
-	// 	} catch (err) {
-	// 		if (err) {
-	// 			console.log('catch' + err);
-	// 		}
-	// 	}
-	// } else {
-	// 	testName = createUser();
-	// 	usernameAvail(testName);
-	// }
 });
 
 module.exports = router;

@@ -24,7 +24,7 @@ db.once('open', function () {
 });
 
 const corsOptions = {
-	origin: true,
+	origin: process.env.ORIGIN_SITE,
 	'Access-Control-Allow-Credentials': true,
 	credentials: true,
 	methods: ['POST', 'GET'],

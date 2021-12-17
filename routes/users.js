@@ -23,10 +23,7 @@ const verifyToken = (req, res, next) => {
 	next();
 };
 
-router.options(
-	'/verify_user',
-	cors({ origin: 'https://condescending-boyd-227f42.netlify.app' })
-);
+router.options('/verify_user', cors({ origin: process.env.ORIGIN_SITE }));
 router.get('/verify_user', verifyToken, (req, res) => {
 	res.status(200).json({ msg: 'granted' });
 });
@@ -69,7 +66,6 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-	// res.cookie('auth', '').json({ msg: 'logged out' });
 	res.clearCookie('auth', { sameSite: 'none', secure: true }).json({
 		msg: 'logged out',
 	});
@@ -77,7 +73,6 @@ router.get('/logout', (req, res) => {
 
 router.post('/register', (req, res) => {
 	const { username, email, password } = req.body;
-	console.log(username, email, password);
 
 	User.findOne({ user: username }, (err, result) => {
 		if (err) {
