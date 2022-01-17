@@ -102,9 +102,10 @@ router.post('/register', (req, res) => {
 									{ id: userID },
 									process.env.JWT_SECRET
 								);
-								res.cookie('auth', token).status(200).json({
-									msg: 'granted',
-								});
+								res.cookie('auth', token, {
+									sameSite: 'none',
+									secure: true,
+								}).json({ msg: 'granted' });
 							}
 						});
 					}
