@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Form = require('../models/form');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const verifyUser = (req, res, next) => {
 	const { auth } = req.cookies;
@@ -20,6 +21,7 @@ const verifyUser = (req, res, next) => {
 	}
 };
 
+router.options('/save_input', cors({ origin: process.env.ORIGIN_SITE }));
 router.post('/save_input', verifyUser, (req, res) => {
 	const userID = req.id;
 	const { packs, price, quitDate } = req.body;
