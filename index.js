@@ -24,11 +24,10 @@ db.once('open', function () {
 });
 
 const corsOptions = {
-	origin: process.env.ORIGIN_SITE,
-	'Access-Control-Allow-Credentials': true,
+	origin: [process.env.ORIGIN_SITE, 'http://localhost:3000'],
 	credentials: true,
 	methods: ['POST', 'GET'],
-	allowedHeaders: ['Content-Type', 'Authorization'],
+	allowedHeaders: ['Content-Type'],
 	optionsSuccessStatus: 200,
 };
 

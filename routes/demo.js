@@ -10,20 +10,6 @@ function createUser() {
 	return 'demoUser' + Math.floor(Math.random() * 1000000000);
 }
 
-const usernameAvail = async (username) => {
-	console.log('test');
-	return await User.find({ user: username }, (err, result) => {
-		if (err) {
-			console.log('find err' + err);
-		}
-		if (!result) {
-			return true;
-		} else if (result) {
-			return false;
-		}
-	});
-};
-
 router.get('/createDemoUser', async (req, res) => {
 	let testName = createUser();
 
