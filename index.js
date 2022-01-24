@@ -7,6 +7,7 @@ const userRouter = require('./routes/users');
 const goalRouter = require('./routes/goals');
 const formRouter = require('./routes/form');
 const demoRouter = require('./routes/demo');
+const quoteRouter = require('./routes/quote');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/user', userRouter);
 app.use('/goals', goalRouter);
 app.use('/form', formRouter);
 app.use('/demo', demoRouter);
+app.use('/quote', quoteRouter);
 
 app.get('/', (req, res) => {
 	res.send('Hello world');
